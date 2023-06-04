@@ -14,31 +14,31 @@ app.use(express.urlencoded({ extended: true }))
 app.use(bodyParser.json());
 
 //middleware creation using if else
-// function verifyToken(req,res,next){
-//   let authHeaders = req.headers.authorization
-//   if(authHeaders==undefined){
-//     res.status(401).send("no token provided")
-//   }
-//   let token = authHeaders.split(" ")[1]
-//   jwt.verify(token,"scrtkey",(err)=>{
-//     if(err){
-//       res.send("invalid token")
-//     }else{
-//       next();
-//     }
-//   })
-// }
+function verifyToken(req,res,next){
+  let authHeaders = req.headers.authorization
+  if(authHeaders==undefined){
+    res.status(401).send("no token provided")
+  }
+  let token = authHeaders.split(" ")[1]
+  jwt.verify(token,"scrtkey",(err)=>{
+    if(err){
+      res.send("invalid token")
+    }else{
+      next();
+    }
+  })
+}
 
 //middleware creation using ternary
-function verifyToken(req, res, next) {
-  let authHeaders = req.headers.authorization;
-  authHeaders == undefined
-    ? res.status(401).send("no token provided")                     //if
-    : jwt.verify(authHeaders.split(" ")[1], "scrtkey", (err) => {   //else
-      err ? res.send("invalid token")                             //if
-        : next();                                                  //else
-    });
-}
+// function verifyToken(req, res, next) {
+//   let authHeaders = req.headers.authorization;
+//   authHeaders == undefined
+//     ? res.status(401).send("no token provided")                     //if
+//     : jwt.verify(authHeaders.split(" ")[1], "scrtkey", (err) => {   //else
+//       err ? res.send("invalid token")                             //if
+//         : next();                                                  //else
+//     });
+// }
 
 
 //register admin acount
